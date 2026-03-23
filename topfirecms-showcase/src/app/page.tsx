@@ -394,7 +394,7 @@ export default function Home() {
         <section id="problem" className="section-block-alt reveal reveal-delay-1 p-7 sm:p-10">
           <p className="section-chip text-xs text-muted">THE CURRENT REALITY</p>
           <h2 className="display-title mt-3 text-4xl font-semibold sm:text-6xl">
-            Where We Lose Time and Margin Today <span className="gradient-text">.</span>
+            Where We Lose <span className="gradient-text">Time and Margin Today.</span>
           </h2>
           <div className="mt-8 grid gap-4 md:grid-cols-3 reveal-children">
             {painPoints.map((item) => (
@@ -438,7 +438,7 @@ export default function Home() {
         <section className="section-block-alt reveal reveal-delay-3 p-7 sm:p-10">
           <p className="section-chip text-xs text-muted">OPERATING MODEL</p>
           <h2 className="display-title text-4xl font-semibold sm:text-6xl">
-            Build a Repeatable System, Not One-Off Projects <span className="gradient-text">.</span>
+            Build a Repeatable System, <span className="gradient-text">Not One-Off Projects.</span>
           </h2>
           <div className="mt-8 grid gap-4 md:grid-cols-2 reveal-children">
             {operatingModel.map((item) => (
@@ -456,7 +456,7 @@ export default function Home() {
         <section className="section-block reveal p-7 sm:p-10">
           <p className="section-chip text-xs text-muted">WHY THIS MATTERS TO LEADERSHIP</p>
           <h2 className="display-title mt-3 text-4xl font-semibold sm:text-6xl">
-            Better Control Over Growth and Quality <span className="gradient-text">.</span>
+            Better Control Over <span className="gradient-text">Growth and Quality.</span>
           </h2>
           <div className="mt-8 grid gap-4 md:grid-cols-3 reveal-children">
             {businessCase.map((item) => (
@@ -591,7 +591,7 @@ export default function Home() {
         <section className="section-block reveal p-7 sm:p-10">
           <p className="section-chip text-xs text-muted">LEADERSHIP FAQ</p>
           <h2 className="display-title mt-3 text-4xl font-semibold sm:text-6xl">
-            Common Concerns, Clear Answers <span className="gradient-text">.</span>
+            Common Concerns, <span className="gradient-text">Clear Answers.</span>
           </h2>
           <div className="mt-8 space-y-4 reveal-children">
             {concerns.map((item) => (
