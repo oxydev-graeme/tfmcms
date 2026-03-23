@@ -34,6 +34,9 @@ body {
     radial-gradient(60% 40% at 12% 3%, rgba(255, 77, 95, 0.25) 0%, transparent 70%),
     radial-gradient(45% 35% at 86% 12%, rgba(170, 60, 255, 0.28) 0%, transparent 72%),
     linear-gradient(180deg, var(--tf-bg-0) 0%, var(--tf-bg-1) 28%, var(--tf-bg-2) 60%, #110a1d 100%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
   min-height: 100vh;
 }
 
@@ -174,22 +177,74 @@ body {
   background: rgba(255, 255, 255, 0.07);
 }
 
-.reveal {
-  opacity: 0;
-  transform: translateY(16px);
-  animation: rise-in 0.8s ease-out forwards;
+@media (prefers-reduced-motion: no-preference) {
+  .motion-reveal .reveal,
+  .motion-reveal .reveal-children > * {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  .motion-reveal .reveal.is-visible {
+    animation: rise-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .motion-reveal .reveal.reveal-delay-1.is-visible {
+    animation-delay: 0.08s;
+  }
+
+  .motion-reveal .reveal.reveal-delay-2.is-visible {
+    animation-delay: 0.16s;
+  }
+
+  .motion-reveal .reveal.reveal-delay-3.is-visible {
+    animation-delay: 0.24s;
+  }
+
+  .motion-reveal .reveal-children.is-visible > * {
+    animation: rise-in 0.72s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    will-change: opacity, transform;
+  }
+
+  .motion-reveal .reveal-children.is-visible > *:nth-child(1) {
+    animation-delay: 0.06s;
+  }
+
+  .motion-reveal .reveal-children.is-visible > *:nth-child(2) {
+    animation-delay: 0.12s;
+  }
+
+  .motion-reveal .reveal-children.is-visible > *:nth-child(3) {
+    animation-delay: 0.18s;
+  }
+
+  .motion-reveal .reveal-children.is-visible > *:nth-child(4) {
+    animation-delay: 0.24s;
+  }
+
+  .motion-reveal .reveal-children.is-visible > *:nth-child(5) {
+    animation-delay: 0.3s;
+  }
+
+  .motion-reveal .reveal-children.is-visible > *:nth-child(6) {
+    animation-delay: 0.36s;
+  }
+
+  .motion-reveal .reveal-children.is-visible > *:nth-child(7) {
+    animation-delay: 0.42s;
+  }
+
+  .motion-reveal .reveal-children.is-visible > *:nth-child(8) {
+    animation-delay: 0.48s;
+  }
 }
 
-.reveal-delay-1 {
-  animation-delay: 0.08s;
-}
-
-.reveal-delay-2 {
-  animation-delay: 0.16s;
-}
-
-.reveal-delay-3 {
-  animation-delay: 0.24s;
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-children > * {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
 }
 
 @keyframes rise-in {

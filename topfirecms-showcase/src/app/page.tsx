@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect } from "react";
+
 export default function Home() {
   const projectDocsUrl = "https://github.com/oxydev-graeme/tfmcms/tree/main/TopFireCMS";
 
@@ -21,6 +25,83 @@ export default function Home() {
     roiInputs.projectsPerYear * roiInputs.daysSavedPerProject * roiInputs.blendedDayRate;
   const yearlyNetImpact = yearlyRecoveredCapacity - yearlySanityCost - roiInputs.platformOpsYearly;
   const roiMultiple = yearlyRecoveredCapacity / (yearlySanityCost + roiInputs.platformOpsYearly);
+
+  const comparisonColumns = ["TFMCMS", "Sanity", "Contently", "Contentful"];
+
+  const comparisonRows = [
+    {
+      category: "Platform Cost",
+      subtitle: "Indicative yearly platform spend",
+      cells: [
+        { label: `${currency.format(roiInputs.platformOpsYearly)} + MVP build`, score: 82, tone: "good" },
+        { label: `~${currency.format(yearlySanityCost)} + usage`, score: 68, tone: "mid" },
+        { label: "~$65k-$180k enterprise", score: 36, tone: "low" },
+        { label: "~$18k-$60k tiered", score: 56, tone: "mid" },
+      ],
+    },
+    {
+      category: "Schema Flexibility",
+      subtitle: "Custom model control",
+      cells: [
+        { label: "Full agency control", score: 96, tone: "good" },
+        { label: "Excellent", score: 88, tone: "good" },
+        { label: "Moderate", score: 58, tone: "mid" },
+        { label: "Strong", score: 82, tone: "good" },
+      ],
+    },
+    {
+      category: "Governance",
+      subtitle: "Workflow and compliance fit",
+      cells: [
+        { label: "Agency-specific governance", score: 90, tone: "good" },
+        { label: "Strong baseline", score: 84, tone: "good" },
+        { label: "Enterprise editorial", score: 86, tone: "good" },
+        { label: "Strong with config", score: 80, tone: "good" },
+      ],
+    },
+    {
+      category: "Speed to Launch",
+      subtitle: "Time to initial rollout",
+      cells: [
+        { label: "12-week internal MVP", score: 72, tone: "mid" },
+        { label: "Fastest start", score: 90, tone: "good" },
+        { label: "Long enterprise cycle", score: 46, tone: "low" },
+        { label: "Fast with team enablement", score: 78, tone: "good" },
+      ],
+    },
+    {
+      category: "Vendor Lock-In Risk",
+      subtitle: "Strategic control over roadmap",
+      cells: [
+        { label: "Minimal", score: 94, tone: "good" },
+        { label: "Medium", score: 62, tone: "mid" },
+        { label: "High contract dependency", score: 40, tone: "low" },
+        { label: "Medium", score: 58, tone: "mid" },
+      ],
+    },
+    {
+      category: "Long-Term Margin Impact",
+      subtitle: "Agency upside over 2-3 years",
+      cells: [
+        { label: "Highest if adopted well", score: 92, tone: "good" },
+        { label: "Good, ongoing seat and usage", score: 74, tone: "good" },
+        { label: "Limited by enterprise pricing", score: 44, tone: "low" },
+        { label: "Solid, moderate recurring cost", score: 68, tone: "mid" },
+      ],
+    },
+  ];
+
+  const getToneIconClass = (tone: "good" | "mid" | "low") => {
+    if (tone === "good") return "lnr-checkmark-circle text-emerald-300";
+    if (tone === "mid") return "lnr-circle-minus text-amber-300";
+    return "lnr-cross-circle text-rose-300";
+  };
+
+  const getToneBarClass = (tone: "good" | "mid" | "low") => {
+    if (tone === "good") return "bg-[linear-gradient(90deg,#12d6a1,#22d3ee)]";
+    if (tone === "mid") return "bg-[linear-gradient(90deg,#f59e0b,#fb7185)]";
+    return "bg-[linear-gradient(90deg,#fb7185,#ef4444)]";
+  };
 
   const headlineStats = [
     { label: "MVP timeline", value: "12 weeks", icon: "lnr-clock" },
@@ -157,12 +238,68 @@ export default function Home() {
     },
   ];
 
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) {
+      return;
+    }
+
+    const root = document.documentElement;
+    root.classList.add("motion-reveal");
+
+    const revealTargets = Array.from(
+      document.querySelectorAll<HTMLElement>(".reveal, .reveal-children")
+    );
+
+    const revealVisibleTargets = () => {
+      const viewportHeight = window.innerHeight;
+      const revealLine = viewportHeight * 0.86;
+
+      for (const target of revealTargets) {
+        if (target.classList.contains("is-visible")) {
+          continue;
+        }
+
+        const rect = target.getBoundingClientRect();
+        const isInRevealZone = rect.top <= revealLine && rect.bottom >= 0;
+        if (isInRevealZone) {
+          target.classList.add("is-visible");
+        }
+      }
+    };
+
+    let rafId: number | null = null;
+    const onScrollOrResize = () => {
+      if (rafId !== null) {
+        return;
+      }
+
+      rafId = window.requestAnimationFrame(() => {
+        revealVisibleTargets();
+        rafId = null;
+      });
+    };
+
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize);
+    revealVisibleTargets();
+
+    return () => {
+      window.removeEventListener("scroll", onScrollOrResize);
+      window.removeEventListener("resize", onScrollOrResize);
+      if (rafId !== null) {
+        window.cancelAnimationFrame(rafId);
+      }
+      root.classList.remove("motion-reveal");
+    };
+  }, []);
+
   return (
     <div className="site-shell text-[var(--tf-text)]">
-      <header className="sticky top-0 z-40 bg-[#090613]/88 backdrop-blur-md">
+      <header className="sticky top-0 z-40 bg-[#090613]/88 backdrop-blur-md reveal">
         <div className="mx-auto flex w-full max-w-[1440px] items-center justify-between px-5 py-4 sm:px-8">
           <p className="text-sm font-semibold tracking-wide text-white">TopFireCMS</p>
-          <nav className="hidden items-center gap-6 text-xs font-semibold uppercase tracking-[0.08em] sm:flex">
+          <nav className="hidden items-center gap-6 text-xs font-semibold uppercase tracking-[0.08em] sm:flex reveal-children">
             <a href="#problem" className="text-muted hover:text-white">
               Problem
             </a>
@@ -205,7 +342,7 @@ export default function Home() {
             delivery, reduces publishing risk, and gives leadership a predictable path from idea to measurable
             operational gains.
           </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row reveal-children">
             <a
               href="#decision"
               className="btn-primary inline-flex items-center justify-center px-6 py-3 text-sm font-semibold"
@@ -229,7 +366,7 @@ export default function Home() {
             </a>
           </div>
 
-          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4 reveal-children">
             {headlineStats.map((item) => (
               <article key={item.label} className="panel rounded-2xl p-4">
                 <div className="flex flex-col items-start gap-3">
@@ -244,13 +381,17 @@ export default function Home() {
 
         <section id="problem" className="section-block-alt reveal reveal-delay-1 p-7 sm:p-10">
           <p className="section-chip text-xs text-muted">THE CURRENT REALITY</p>
-          <h2 className="display-title mt-3 text-4xl font-semibold sm:text-6xl">Where We Lose Time and Margin Today</h2>
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
+          <h2 className="display-title mt-3 text-4xl font-semibold sm:text-6xl">
+            Where We Lose Time and Margin Today <span className="gradient-text">.</span>
+          </h2>
+          <div className="mt-8 grid gap-4 md:grid-cols-3 reveal-children">
             {painPoints.map((item) => (
               <article key={item.title} className="panel rounded-3xl p-6">
                 <span className={`lnr ${item.icon} li-icon li-icon-lg li-icon-contrast`} aria-hidden="true" />
                 <p className="section-chip mt-3 text-[11px] text-muted">{item.metric}</p>
-                <h3 className="mt-3 text-xl font-semibold">{item.title}</h3>
+                <h3 className="mt-3 text-xl font-semibold">
+                  {item.title} <span className="gradient-text">.</span>
+                </h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted">{item.detail}</p>
               </article>
             ))}
@@ -268,12 +409,14 @@ export default function Home() {
             clients with clear role boundaries, safer publishing, and reusable operating patterns.
           </p>
 
-          <div className="mt-8 grid gap-4 md:grid-cols-2">
+          <div className="mt-8 grid gap-4 md:grid-cols-2 reveal-children">
             {outcomes.map((item) => (
               <article key={item.title} className="panel-soft rounded-3xl p-6">
                 <span className={`lnr ${item.icon} li-icon li-icon-lg li-icon-contrast`} aria-hidden="true" />
                 <p className="metric-value gradient-text mt-3 text-lg">{item.value}</p>
-                <h3 className="mt-2 text-2xl font-semibold">{item.title}</h3>
+                <h3 className="mt-2 text-2xl font-semibold">
+                  {item.title} <span className="gradient-text">.</span>
+                </h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{item.copy}</p>
               </article>
             ))}
@@ -282,33 +425,41 @@ export default function Home() {
 
         <section className="section-block-alt reveal reveal-delay-3 p-7 sm:p-10">
           <p className="section-chip text-xs text-muted">OPERATING MODEL</p>
-          <h2 className="display-title text-4xl font-semibold sm:text-6xl">Build a Repeatable System, Not One-Off Projects</h2>
-          <div className="mt-8 grid gap-4 md:grid-cols-2">
+          <h2 className="display-title text-4xl font-semibold sm:text-6xl">
+            Build a Repeatable System, Not One-Off Projects <span className="gradient-text">.</span>
+          </h2>
+          <div className="mt-8 grid gap-4 md:grid-cols-2 reveal-children">
             {operatingModel.map((item) => (
               <article key={item.title} className="panel-soft rounded-3xl p-6">
                 <span className={`lnr ${item.icon} li-icon li-icon-lg li-icon-contrast`} aria-hidden="true" />
-                <h3 className="mt-3 text-xl font-semibold">{item.title}</h3>
+                <h3 className="mt-3 text-xl font-semibold">
+                  {item.title} <span className="gradient-text">.</span>
+                </h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{item.copy}</p>
               </article>
             ))}
           </div>
         </section>
 
-        <section className="section-block p-7 sm:p-10">
+        <section className="section-block reveal p-7 sm:p-10">
           <p className="section-chip text-xs text-muted">WHY THIS MATTERS TO LEADERSHIP</p>
-          <h2 className="display-title mt-3 text-4xl font-semibold sm:text-6xl">Better Control Over Growth and Quality</h2>
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
+          <h2 className="display-title mt-3 text-4xl font-semibold sm:text-6xl">
+            Better Control Over Growth and Quality <span className="gradient-text">.</span>
+          </h2>
+          <div className="mt-8 grid gap-4 md:grid-cols-3 reveal-children">
             {businessCase.map((item) => (
               <article key={item.title} className="panel rounded-3xl p-6">
                 <span className={`lnr ${item.icon} li-icon li-icon-lg li-icon-contrast`} aria-hidden="true" />
-                <h3 className="mt-3 text-2xl font-semibold">{item.title}</h3>
+                <h3 className="mt-3 text-2xl font-semibold">
+                  {item.title} <span className="gradient-text">.</span>
+                </h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted">{item.copy}</p>
               </article>
             ))}
           </div>
         </section>
 
-        <section id="roi" className="section-block-alt p-7 sm:p-10">
+        <section id="roi" className="section-block-alt reveal p-7 sm:p-10">
           <p className="section-chip text-xs text-muted">FINANCIAL IMPACT</p>
           <h2 className="display-title mt-3 text-4xl font-semibold sm:text-6xl">
             Revenue Capacity Gain vs
@@ -319,7 +470,7 @@ export default function Home() {
             project volume, and rate card.
           </p>
 
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
+          <div className="mt-8 grid gap-4 md:grid-cols-3 reveal-children">
             <article className="panel rounded-3xl p-6">
               <span className="lnr lnr-wallet li-icon li-icon-lg li-icon-contrast" aria-hidden="true" />
               <p className="section-chip mt-3 text-[11px] text-muted">ANNUAL SANITY STUDIO COST</p>
@@ -349,49 +500,111 @@ export default function Home() {
               </p>
             </article>
           </div>
+
+          <div className="mt-12">
+            <h3 className="flex items-center gap-3 text-2xl font-semibold sm:text-3xl">
+              <span className="lnr lnr-chart-bars li-icon li-icon-md li-icon-contrast" aria-hidden="true" />
+              <span>
+                Platform Comparison <span className="gradient-text">Matrix</span>
+              </span>
+            </h3>
+            <div className="panel mt-5 rounded-3xl bg-[linear-gradient(180deg,rgba(14,20,42,0.82),rgba(8,11,24,0.92))] p-3 sm:p-4">
+              <div className="overflow-x-auto">
+                <div className="min-w-[1060px] space-y-2 reveal-children">
+                  <div className="grid grid-cols-[260px_repeat(4,minmax(180px,1fr))] gap-2">
+                    <div className="rounded-2xl bg-white/[0.03] px-4 py-4 section-chip text-[11px] text-muted">CATEGORY</div>
+                    {comparisonColumns.map((column, index) => (
+                      <div key={column} className="rounded-2xl bg-white/[0.03] px-4 py-4 text-sm font-semibold text-white">
+                        <span className={index === 0 ? "gradient-text" : "text-white"}>{column}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {comparisonRows.map((row) => (
+                    <div key={row.category} className="grid grid-cols-[260px_repeat(4,minmax(180px,1fr))] gap-2 reveal-children">
+                      <div className="rounded-2xl bg-white/[0.02] px-4 py-4">
+                        <p className="text-xl font-semibold text-white">{row.category}</p>
+                        <p className="mt-1 text-sm text-muted">{row.subtitle}</p>
+                      </div>
+
+                      {row.cells.map((cell, idx) => (
+                        <div key={`${row.category}-${idx}`} className="rounded-2xl bg-white/[0.02] px-4 py-4">
+                          <p className="flex items-center gap-2 text-sm font-semibold text-white">
+                            <span className={`lnr ${getToneIconClass(cell.tone)} li-icon li-icon-sm`} aria-hidden="true" />
+                            <span>{cell.label}</span>
+                          </p>
+                          <div className="mt-3 h-2 w-full rounded-full bg-white/10">
+                            <div
+                              className={`h-full rounded-full ${getToneBarClass(cell.tone)}`}
+                              style={{ width: `${cell.score}%` }}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="panel mt-4 rounded-2xl p-4 sm:p-5">
+              <p className="text-xs leading-relaxed text-muted">
+                Cost ranges are directional estimates for planning and depend on contract terms, seat count, usage,
+                support level, and implementation scope.
+              </p>
+            </div>
+          </div>
         </section>
 
-        <section id="roadmap" className="section-block-alt p-7 sm:p-10">
+        <section id="roadmap" className="section-block-alt reveal p-7 sm:p-10">
           <p className="section-chip text-xs text-muted">DELIVERY PLAN</p>
           <h2 className="display-title mt-3 text-4xl font-semibold sm:text-6xl">
             From Approval to
             <span className="gradient-text"> Live Pilot in 12 Weeks</span>
           </h2>
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
+          <div className="mt-8 grid gap-4 md:grid-cols-3 reveal-children">
             {roadmap.map((item) => (
               <article key={item.phase} className="panel-soft rounded-3xl p-6">
                 <span className={`lnr ${item.icon} li-icon li-icon-lg li-icon-contrast`} aria-hidden="true" />
                 <p className="section-chip text-[11px] text-muted">{item.phase}</p>
-                <h3 className="mt-3 text-2xl font-semibold">{item.title}</h3>
+                <h3 className="mt-3 text-2xl font-semibold">
+                  {item.title} <span className="gradient-text">.</span>
+                </h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted">{item.copy}</p>
               </article>
             ))}
           </div>
         </section>
 
-        <section className="section-block p-7 sm:p-10">
+        <section className="section-block reveal p-7 sm:p-10">
           <p className="section-chip text-xs text-muted">LEADERSHIP FAQ</p>
-          <h2 className="display-title mt-3 text-4xl font-semibold sm:text-6xl">Common Concerns, Clear Answers</h2>
-          <div className="mt-8 space-y-4">
+          <h2 className="display-title mt-3 text-4xl font-semibold sm:text-6xl">
+            Common Concerns, Clear Answers <span className="gradient-text">.</span>
+          </h2>
+          <div className="mt-8 space-y-4 reveal-children">
             {concerns.map((item) => (
               <article key={item.q} className="panel rounded-2xl p-6">
                 <span className="lnr lnr-bubble li-icon li-icon-lg li-icon-contrast" aria-hidden="true" />
-                <h3 className="mt-3 text-lg font-semibold">{item.q}</h3>
+                <h3 className="mt-3 text-lg font-semibold">
+                  {item.q} <span className="gradient-text">.</span>
+                </h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{item.a}</p>
               </article>
             ))}
           </div>
         </section>
 
-        <section id="decision" className="section-block-alt p-7 sm:p-10">
-          <div className="rounded-3xl bg-[linear-gradient(120deg,var(--tf-grad-a),var(--tf-grad-b))] px-6 py-10 text-white sm:px-10 sm:py-12">
+        <section id="decision" className="section-block-alt reveal p-7 sm:p-10">
+          <div className="rounded-3xl bg-[linear-gradient(120deg,var(--tf-grad-a),var(--tf-grad-b))] px-6 py-10 text-white sm:px-10 sm:py-12 reveal-children">
             <p className="section-chip text-xs text-white/80">DECISION POINT</p>
-            <h2 className="display-title mt-3 text-4xl font-semibold text-white sm:text-6xl">Approve a Focused MVP Pilot</h2>
+            <h2 className="display-title mt-3 text-4xl font-semibold text-white sm:text-6xl">
+              Approve a Focused MVP Pilot <span className="gradient-text">.</span>
+            </h2>
             <p className="mt-5 max-w-3xl text-sm leading-relaxed text-white/90 sm:text-base">
               Authorize a 12-week MVP with strict scope, milestone reviews, and two pilot client workspaces. The
               result is a leadership-ready proof of operational impact before broader rollout.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row reveal-children">
               <a
                 href="#roadmap"
                 className="inline-flex items-center justify-center rounded-full bg-white/10 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/16"
@@ -418,8 +631,8 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="bg-[#0a0712]">
-        <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-2 px-5 py-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between sm:px-8">
+      <footer className="bg-[#0a0712] reveal">
+        <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-2 px-5 py-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between sm:px-8 reveal-children">
           <p>TopFireCMS internal proposal</p>
           <p>Built for CEO review and stakeholder feedback</p>
         </div>
