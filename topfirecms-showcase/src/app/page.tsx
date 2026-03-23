@@ -26,9 +26,21 @@ export default function Home() {
   const yearlyNetImpact = yearlyRecoveredCapacity - yearlySanityCost - roiInputs.platformOpsYearly;
   const roiMultiple = yearlyRecoveredCapacity / (yearlySanityCost + roiInputs.platformOpsYearly);
 
+  type ComparisonTone = "good" | "mid" | "low";
+  type ComparisonCell = {
+    label: string;
+    score: number;
+    tone: ComparisonTone;
+  };
+  type ComparisonRow = {
+    category: string;
+    subtitle: string;
+    cells: ComparisonCell[];
+  };
+
   const comparisonColumns = ["TFMCMS", "Sanity", "Contently", "Contentful"];
 
-  const comparisonRows = [
+  const comparisonRows: ComparisonRow[] = [
     {
       category: "Platform Cost",
       subtitle: "Indicative yearly platform spend",
@@ -91,13 +103,13 @@ export default function Home() {
     },
   ];
 
-  const getToneIconClass = (tone: "good" | "mid" | "low") => {
+  const getToneIconClass = (tone: ComparisonTone) => {
     if (tone === "good") return "lnr-checkmark-circle text-emerald-300";
     if (tone === "mid") return "lnr-circle-minus text-amber-300";
     return "lnr-cross-circle text-rose-300";
   };
 
-  const getToneBarClass = (tone: "good" | "mid" | "low") => {
+  const getToneBarClass = (tone: ComparisonTone) => {
     if (tone === "good") return "bg-[linear-gradient(90deg,#12d6a1,#22d3ee)]";
     if (tone === "mid") return "bg-[linear-gradient(90deg,#f59e0b,#fb7185)]";
     return "bg-[linear-gradient(90deg,#fb7185,#ef4444)]";
