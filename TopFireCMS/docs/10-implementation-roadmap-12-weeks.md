@@ -58,7 +58,7 @@ Deliverables:
 
 Exit criteria:
 - production readiness review passed
-- pilot users publishing through TopFireCMS
+- pilot users publishing through FireContent
 
 ## Milestone reviews
 

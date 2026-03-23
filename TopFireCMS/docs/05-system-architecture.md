@@ -2,7 +2,7 @@
 
 ## Architecture summary
 
-TopFireCMS uses a modular architecture with clear boundaries:
+FireContent uses a modular architecture with clear boundaries:
 - Studio and admin applications for users
 - API services for content and workflow operations
 - Worker services for asynchronous tasks

@@ -643,7 +643,7 @@ export default function Home() {
 
       <footer className="bg-[#0a0712] reveal">
         <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-2 px-5 py-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between sm:px-8 reveal-children">
-          <p>TopFireCMS internal proposal</p>
+          <p>FireContent internal proposal</p>
           <p>Built for CEO review and stakeholder feedback</p>
         </div>
       </footer>

@@ -3,11 +3,11 @@
 ## Decision context
 
 The agency must decide whether to:
-- build TopFireCMS internally
+- build FireContent internally
 - continue with existing third-party tools
 - adopt a hybrid approach
 
-## Option A: Build TopFireCMS
+## Option A: Build FireContent
 
 Advantages:
 - Full control over roadmap and workflow fit

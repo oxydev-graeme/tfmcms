@@ -52,7 +52,7 @@ Build a single internal platform that:
 
 ## Opportunity scorecard
 
-TopFireCMS has high potential if we execute on:
+FireContent has high potential if we execute on:
 - stable core architecture
 - rigorous schema governance
 - excellent editor experience

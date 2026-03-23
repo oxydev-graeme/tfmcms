@@ -1,6 +1,6 @@
-# TopFireCMS
+# FireContent
 
-TopFireCMS is a proposal for a private headless CMS platform built for one agency and its clients.
+FireContent is a proposal for a private headless CMS platform built for one agency and its clients.
 
 This is not a public SaaS for many agencies. It is a focused system for:
 - internal agency teams

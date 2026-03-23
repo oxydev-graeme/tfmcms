@@ -2,7 +2,7 @@
 
 ## Vision
 
-TopFireCMS is a private, agency-owned headless CMS designed for one agency serving many clients through isolated workspaces.
+FireContent is a private, agency-owned headless CMS designed for one agency serving many clients through isolated workspaces.
 
 The goal is to combine:
 - schema flexibility similar to Sanity
