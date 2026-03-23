@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 
 export default function Home() {
-  const projectDocsUrl = "https://github.com/oxydev-graeme/tfmcms/tree/main/FireContent";
+  const projectDocsUrl = "https://github.com/oxydev-graeme/tfmcms/tree/main/TopFireCMS/docs";
 
   const roiInputs = {
     sanitySeatCostPerMonth: 20,
