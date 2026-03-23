@@ -14,9 +14,9 @@ const monoFont = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TopFireCMS | Internal Strategy Showcase",
+  title: "FireContent | Internal Strategy Showcase",
   description:
-    "TopFireCMS proposal site for a private single-agency, multi-client headless CMS.",
+    "FireContent proposal site for a private single-agency, multi-client headless CMS.",
 };
 
 export default function RootLayout({
