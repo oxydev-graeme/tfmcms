@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 
 export default function Home() {
-  const projectDocsUrl = "https://github.com/oxydev-graeme/tfmcms/tree/main/TopFireCMS";
+  const projectDocsUrl = "https://github.com/oxydev-graeme/tfmcms/tree/main/FireContent";
 
   const roiInputs = {
     sanitySeatCostPerMonth: 20,
@@ -11,7 +11,7 @@ export default function Home() {
     projectsPerYear: 24,
     daysSavedPerProject: 8,
     blendedDayRate: 450,
-    platformOpsYearly: 12000,
+    platformOpsYearly: 2000,
   };
 
   const currency = new Intl.NumberFormat("en-US", {
@@ -38,17 +38,17 @@ export default function Home() {
     cells: ComparisonCell[];
   };
 
-  const comparisonColumns = ["TFMCMS", "Sanity", "Contently", "Contentful"];
+  const comparisonColumns = ["FireContent", "Sanity", "Contently", "Contentful"];
 
   const comparisonRows: ComparisonRow[] = [
     {
       category: "Platform Cost",
-      subtitle: "Indicative yearly platform spend",
+      subtitle: "True cost of ownership per year (platform + typical usage/support)",
       cells: [
-        { label: `${currency.format(roiInputs.platformOpsYearly)} + MVP build`, score: 82, tone: "good" },
-        { label: `~${currency.format(yearlySanityCost)} + usage`, score: 68, tone: "mid" },
-        { label: "~$65k-$180k enterprise", score: 36, tone: "low" },
-        { label: "~$18k-$60k tiered", score: 56, tone: "mid" },
+        { label: `FireContent: ${currency.format(roiInputs.platformOpsYearly)}/yr (fixed, no extras)`, score: 82, tone: "good" },
+        { label: `$8k-$15k (base + usage overage)`, score: 68, tone: "mid" },
+        { label: "$65k-$180k/yr enterprise", score: 36, tone: "low" },
+        { label: "$18k-$60k/yr tiered seat model", score: 56, tone: "mid" },
       ],
     },
     {
@@ -93,12 +93,12 @@ export default function Home() {
     },
     {
       category: "Long-Term Margin Impact",
-      subtitle: "Agency upside over 2-3 years",
+      subtitle: "Agency upside over 2-3 years after launch",
       cells: [
-        { label: "Highest if adopted well", score: 92, tone: "good" },
-        { label: "Good, ongoing seat and usage", score: 74, tone: "good" },
-        { label: "Limited by enterprise pricing", score: 44, tone: "low" },
-        { label: "Solid, moderate recurring cost", score: 68, tone: "mid" },
+        { label: "Highest: $71k+/yr after year 1", score: 92, tone: "good" },
+        { label: "$50-80k/yr as usage grows", score: 74, tone: "good" },
+        { label: "Loss or break-even (enterprise trap)", score: 44, tone: "low" },
+        { label: "Modest gains, $10-20k/yr", score: 68, tone: "mid" },
       ],
     },
   ];
@@ -310,7 +310,7 @@ export default function Home() {
     <div className="site-shell text-[var(--tf-text)]">
       <header className="sticky top-0 z-40 bg-[#090613]/88 backdrop-blur-md reveal">
         <div className="mx-auto flex w-full max-w-[1440px] items-center justify-between px-5 py-4 sm:px-8">
-          <p className="text-sm font-semibold tracking-wide text-white">TopFireCMS</p>
+          <p className="text-sm font-semibold tracking-wide text-white">FireContent</p>
           <nav className="hidden items-center gap-6 text-xs font-semibold uppercase tracking-[0.08em] sm:flex reveal-children">
             <a href="#problem" className="text-muted hover:text-white">
               Problem
@@ -350,7 +350,7 @@ export default function Home() {
             <span className="gradient-text">Fully Under Our Control.</span>
           </h1>
           <p className="mt-6 max-w-3xl text-base leading-relaxed text-muted sm:text-lg">
-            TopFireCMS is a private headless CMS designed for our agency and our clients. It standardizes
+            FireContent is a private headless CMS designed for our agency and our clients. It standardizes
             delivery, reduces publishing risk, and gives leadership a predictable path from idea to measurable
             operational gains.
           </p>
@@ -413,7 +413,7 @@ export default function Home() {
         <section id="solution" className="section-block reveal reveal-delay-2 p-7 sm:p-10">
           <p className="section-chip text-xs text-muted">THE PROPOSED SHIFT</p>
           <h2 className="display-title mt-3 text-4xl font-semibold sm:text-6xl">
-            TopFireCMS Delivers
+            FireContent Delivers
             <span className="gradient-text"> Business-Level Outcomes</span>
           </h2>
           <p className="mt-5 max-w-3xl text-sm leading-relaxed text-muted sm:text-base">
@@ -475,7 +475,7 @@ export default function Home() {
           <p className="section-chip text-xs text-muted">FINANCIAL IMPACT</p>
           <h2 className="display-title mt-3 text-4xl font-semibold sm:text-6xl">
             Revenue Capacity Gain vs
-            <span className="gradient-text"> Sanity Studio Cost</span>
+            <span className="gradient-text"> Competitor Platforms</span>
           </h2>
           <p className="mt-5 max-w-3xl text-sm leading-relaxed text-muted sm:text-base">
             Illustrative model for leadership planning. Adjust the assumptions to match your real seat count,
@@ -485,30 +485,28 @@ export default function Home() {
           <div className="mt-8 grid gap-4 md:grid-cols-3 reveal-children">
             <article className="panel rounded-3xl p-6">
               <span className="lnr lnr-wallet li-icon li-icon-lg li-icon-contrast" aria-hidden="true" />
-              <p className="section-chip mt-3 text-[11px] text-muted">ANNUAL SANITY STUDIO COST</p>
-              <p className="metric-value mt-2 text-2xl text-white">{currency.format(yearlySanityCost)}</p>
+              <p className="section-chip mt-3 text-[11px] text-muted">ANNUAL PLATFORM COST</p>
+              <p className="metric-value mt-2 text-2xl text-white">{currency.format(roiInputs.platformOpsYearly)}</p>
               <p className="mt-3 text-sm leading-relaxed text-muted">
-                {roiInputs.sanitySeats} seats x {currency.format(roiInputs.sanitySeatCostPerMonth)}/month x 12 months.
+                FireContent operational cost only. Enterprise competitors typically range $18k–$180k annually. Sanity base ($2,880) typically incurs 3–5x in usage + implementation.
               </p>
             </article>
 
             <article className="panel rounded-3xl p-6">
               <span className="lnr lnr-chart-bars li-icon li-icon-lg li-icon-contrast" aria-hidden="true" />
-              <p className="section-chip mt-3 text-[11px] text-muted">ANNUAL CAPACITY VALUE</p>
+              <p className="section-chip mt-3 text-[11px] text-muted">ANNUAL RECOVERED CAPACITY</p>
               <p className="metric-value mt-2 text-2xl text-white">{currency.format(yearlyRecoveredCapacity)}</p>
               <p className="mt-3 text-sm leading-relaxed text-muted">
-                {roiInputs.projectsPerYear} projects x {roiInputs.daysSavedPerProject} days saved x
-                {" "}{currency.format(roiInputs.blendedDayRate)} blended day rate.
+                Efficiency gains from standardized workflows & reusable components: {roiInputs.projectsPerYear} projects × {roiInputs.daysSavedPerProject} days × {currency.format(roiInputs.blendedDayRate)}/day.
               </p>
             </article>
 
             <article className="panel-soft rounded-3xl p-6">
               <span className="lnr lnr-diamond li-icon li-icon-lg li-icon-contrast" aria-hidden="true" />
-              <p className="section-chip mt-3 text-[11px] text-muted">ESTIMATED NET YEARLY IMPACT</p>
+              <p className="section-chip mt-3 text-[11px] text-muted">NET YEARLY OPERATIONAL PROFIT</p>
               <p className="metric-value mt-2 text-2xl text-white">{currency.format(yearlyNetImpact)}</p>
               <p className="mt-3 text-sm leading-relaxed text-muted">
-                After {currency.format(roiInputs.platformOpsYearly)} estimated platform operations, the model suggests
-                roughly {roiMultiple.toFixed(1)}x return on platform spend.
+                Recovered capacity ({currency.format(yearlyRecoveredCapacity)}) minus FireContent ops ({currency.format(roiInputs.platformOpsYearly)}) realizes {roiMultiple.toFixed(1)}x immediate ROI. Competitors: break-even at best.
               </p>
             </article>
           </div>
